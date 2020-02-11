@@ -1,4 +1,3 @@
-import * as React from 'react';
 catlist =
 [
 "art", "ascii-art", "computers", "cookie", "debian", "definitions", "disclaimer", "drugs", "education", "ethnic", "food",
@@ -26,7 +25,7 @@ getrandomfortune = () => {
 export const getcollection = (total) => {
     let collection = []
     while(collection.length < total){
-        fort = this.getrandomfortune()
+        fort = getrandomfortune()
         collection.push(fort)
     }
     return collection
