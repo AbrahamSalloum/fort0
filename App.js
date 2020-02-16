@@ -47,8 +47,8 @@ constructor(props) {
     };
 }
 
-_getmorecontent = async () => {
-    f = await getcollection(20)
+_getmorecontent = async (t) => {
+    f = await getcollection(t)
     await this.setState({ forts: false },() => {
         this.setState({
             fortunes: f,
@@ -64,7 +64,7 @@ _getmorecontent = async () => {
 			    ...Ionicons.font
       });
       this.setState({ fontisloaded: true })
-	    this._getmorecontent()
+	    this._getmorecontent(10)
   }
 
 	render(){
@@ -87,7 +87,7 @@ _getmorecontent = async () => {
           data={this.state.fortunes}
           renderItem={({ item }) => <FortuneCard fortune={item} />}
           keyExtractor={(item, i) => item.k + item.t + i.toString()} // are you feeling lucky?
-          onEndReached={() => {this._getmorecontent(20)}}
+          onEndReached={() => {this._getmorecontent(10)}}
           onEndReachedThreshold={.5}
           />
       </View>
