@@ -15,16 +15,22 @@ getexcludelist = () => {
     return ["art"]
 }
 
+baseurl = () => {
+    // this will be user-configuration
+    return "https://raw.githubusercontent.com/AbrahamSalloum/fort0/master/jsonfortunes/"
+}
+
 const getrandomfortune = async () => {
     randcat = getrandom(catlist.length)
     cat = catlist[randcat]
-    f = await fetch("https://raw.githubusercontent.com/AbrahamSalloum/fort0/master/jsonfortunes/"+catlist[getrandom(catlist.length)]+".json")
+    url = baseurl()+catlist[getrandom(catlist.length)]+".json"
+    f = await fetch(url)
     fo = await f.json(); 
     randfort = getrandom(fo.length)
     return fo[randfort]
 }
 
-export const  getcollection =  async (total) => {
+export const getcollection = async (total) => {
     collection = []
     while(total > 0 ){
         x = await getrandomfortune()
