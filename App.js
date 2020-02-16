@@ -1,19 +1,37 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
 import Constants from 'expo-constants';
-import { Header, Card,  Left, Icon, Button, Title, CheckBox } from 'native-base';
+import { Header, Card, Left, Icon, Button, Title, CheckBox, CardItem } from 'native-base';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer} from 'react-navigation';
-import { shuffle } from "lodash";
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import FortOptions from "./FortOptions.js"
 import {getcollection} from "./FortuneLogic.js"
 
+const stringToColour = (str) => {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  var colour = '#';
+  for (var i = 0; i < 3; i++) {
+    var value = (hash >> (i * 8)) & 0xFF;
+    colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
+}
+
 function FortuneCard({fortune}) {
   return(
-    <Card >
+    <Card>
+      <CardItem header style={styles.header}>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={{ width: 25, height: 25, backgroundColor: stringToColour(fortune.t)}}></View>
+          <Text style={{color:"white"}}>{fortune.t}</Text>
+        </View>
+      </CardItem>
     <Text style={styles.colortext}>{fortune.f}</Text>
     </Card>
   )
@@ -25,40 +43,41 @@ constructor(props) {
     super(props);
 		this.state = {
       fontisloaded: false,
-      forts: false, 
+      forts: false,
     };
 }
 
-  _getmorecontent = () => {
-      this.setState({ forts: false },() => {
-        this.setState({ 
-          fortunes: getcollection(20),  
-          forts: true 
+_getmorecontent = async () => {
+    f = await getcollection(20)
+    await this.setState({ forts: false },() => {
+        this.setState({
+            fortunes: f,
+            forts: true
         })
     })
   }
 
 	async componentDidMount(){
-		await Font.loadAsync({
-			'Roboto': require('./assets/Fonts/Roboto.ttf'),
-			'Roboto_medium': require('./assets/Fonts/Roboto_medium.ttf'),
-			...Ionicons.font
-    });
-    this.setState({ fontisloaded: true })
-	  this._getmorecontent()
+		  await Font.loadAsync({
+		      'Roboto': require('./assets/Fonts/Roboto.ttf'),
+			    'Roboto_medium': require('./assets/Fonts/Roboto_medium.ttf'),
+			    ...Ionicons.font
+      });
+      this.setState({ fontisloaded: true })
+	    this._getmorecontent()
   }
 
 	render(){
 
-    if (!this.state.fontisloaded || !this.state.forts) {
-			return <AppLoading />;
-    }
+      if (!this.state.fontisloaded || !this.state.forts) {
+			    return <AppLoading />;
+      }
 
-    return (
-      <View style={styles.container}>
-      <Header style={styles.prompt}>
-      <Left style={{Width:500,flex: 3}}>
-        <Button transparent onPress = {() => this.props.navigation.toggleDrawer()}>
+      return (
+          <View style={styles.container}>
+          <Header style={styles.prompt}>
+          <Left style={{Width:500,flex: 3}}>
+          <Button transparent onPress = {() => this.props.navigation.toggleDrawer()}>
           <Icon name='menu' />
           <Title> user@localhost~$ fortune</Title>
         </Button>
@@ -67,9 +86,9 @@ constructor(props) {
           <FlatList
           data={this.state.fortunes}
           renderItem={({ item }) => <FortuneCard fortune={item} />}
-          keyExtractor={item => item.k+item.t+this.state.count}
+          keyExtractor={(item, i) => item.k + item.t + i.toString()} // are you feeling lucky?
           onEndReached={() => {this._getmorecontent(20)}}
-          onEndReachedThreshold={1}
+          onEndReachedThreshold={.5}
           />
       </View>
     );
@@ -110,5 +129,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     backgroundColor: '#272D38',
     color: "#bae67e"
+  },
+  header:{
+    color: "white",
+    backgroundColor: '#313846',
   }
 });

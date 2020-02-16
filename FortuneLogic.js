@@ -1,3 +1,4 @@
+
 catlist =
 [
 "art", "ascii-art", "computers", "cookie", "debian", "definitions", "disclaimer", "drugs", "education", "ethnic", "food",
@@ -11,22 +12,24 @@ getrandom = (max) => {
 }
 
 getexcludelist = () => {
-    return [""]
+    return ["art"]
 }
 
-getrandomfortune = () => {
+const getrandomfortune = async () => {
     randcat = getrandom(catlist.length)
     cat = catlist[randcat]
-    fortunelist = require("./jsonfortunes/" +"startrek"+".json")
-    randfort = getrandom(fortunelist.length)
-    return fortunelist[randfort]
+    f = await fetch("https://raw.githubusercontent.com/AbrahamSalloum/fort0/master/jsonfortunes/"+catlist[getrandom(catlist.length)]+".json")
+    fo = await f.json(); 
+    randfort = getrandom(fo.length)
+    return fo[randfort]
 }
 
-export const getcollection = (total) => {
-    let collection = []
-    while(collection.length < total){
-        fort = getrandomfortune()
-        collection.push(fort)
+export const  getcollection =  async (total) => {
+    collection = []
+    while(total > 0 ){
+        x = await getrandomfortune()
+        collection.push(x)
+	    total--
     }
-    return collection
+	return collection
 }
