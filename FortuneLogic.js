@@ -12,7 +12,7 @@ getrandom = (max) => {
 }
 
 getexcludelist = () => {
-    return ["art"]
+    return ["ascii-art"]
 }
 
 baseurl = () => {
@@ -22,7 +22,12 @@ baseurl = () => {
 
 const getrandomfortune = async () => {
     randcat = getrandom(catlist.length)
-    cat = catlist[randcat]
+    let cat = catlist[randcat]
+    excludelist = getexcludelist()
+    while(excludelist.includes(cat)){
+        cat = catlist[randcat]
+    }
+
     url = baseurl()+catlist[getrandom(catlist.length)]+".json"
     f = await fetch(url)
     fo = await f.json(); 
