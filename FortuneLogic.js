@@ -19,6 +19,7 @@ getrandom = (max) => {
 }
 
 getexcludelist = () => {
+    // this will be user-configuration
     return ["ascii-art"]
 }
 
