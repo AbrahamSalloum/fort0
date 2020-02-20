@@ -1,5 +1,6 @@
 
-catlist = {
+
+catlist = { // this will be a laodable variable
     catlist: [
         "art", "ascii-art", "computers", "cookie", "debian",
         "definitions", "disclaimer", "drugs", "education",
