@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
 import Constants from 'expo-constants';
-import { Header, Card,  Left, Icon, Button, Title, CheckBox } from 'native-base';
+import { Header, Card, Left, Icon, Button, List, ListItem,  Title, CheckBox } from 'native-base';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
@@ -25,21 +25,21 @@ class FortOptions extends React.Component {
 
 	render(){
     if (!this.state.fontisloaded) {
-			return <AppLoading />;
+			return <AppLoading />
 		}
   return(
     <View style={{color:"White", ...styles.container}}>
     <Title>Options</Title>
-      <View>
-      <View style={styles.optionslist}>
-        <Text style={{color:"white"}}>Discworld</Text>
-        <CheckBox checked={true} /> 
-      </View>
-      <View  style={styles.optionslist}>
-        <Text style={{color:"white"}}>H2G2</Text>
-        <CheckBox checked={true} />
-      </View>
-    </View>
+      <List>
+        <ListItem>
+          <Text style={{ color: "white" }}>Discworld</Text>
+          <CheckBox checked={true} />
+        </ListItem>
+        <ListItem>
+          <Text style={{color:"white"}}>H2G2</Text>
+          <CheckBox checked={true} />
+        </ListItem>
+      </List>
   </View>
   )
   }
@@ -53,12 +53,11 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
     backgroundColor: '#272D38',
     padding: 8,
-    
+
   },
-    optionslist: {
+  optionslist: {
     flexDirection: 'row',
   }
 });
-
 
 export default FortOptions;

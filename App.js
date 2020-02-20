@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
 import Constants from 'expo-constants';
-import { Header, Card, Left, Icon, Button, Title, CheckBox, CardItem } from 'native-base';
+import { Header, Card, Left, Icon, Button, Title, CardItem } from 'native-base';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer} from 'react-navigation';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
-import FortOptions from "./FortOptions.js"
-import {getcollection} from "./FortuneLogic.js"
+import FortOptions from "./FortOptions.js";
+import { getcollection } from "./FortuneLogic.js";
 
 const stringToColour = (str) => {
     var hash = 0;
@@ -41,10 +41,10 @@ class App extends React.Component {
 
 constructor(props) {
     super(props);
-	this.state = {
-        fontisloaded: false,
-        forts: false,
-    };
+    this.state = {
+          fontisloaded: false,
+          forts: false,
+      };
 }
 
 _getmorecontent = async (t) => {
@@ -58,14 +58,14 @@ _getmorecontent = async (t) => {
 }
 
 async componentDidMount(){
-await Font.loadAsync({
-		      'Roboto': require('./assets/Fonts/Roboto.ttf'),
-			    'Roboto_medium': require('./assets/Fonts/Roboto_medium.ttf'),
-			    ...Ionicons.font
-      });
-      this.setState({ fontisloaded: true })
-	    this._getmorecontent(10)
-  }
+  await Font.loadAsync({
+            'Roboto': require('./assets/Fonts/Roboto.ttf'),
+            'Roboto_medium': require('./assets/Fonts/Roboto_medium.ttf'),
+            ...Ionicons.font
+        });
+        this.setState({ fontisloaded: true })
+        this._getmorecontent(10)
+}
 
 render(){
 
@@ -105,35 +105,33 @@ const Menu = createDrawerNavigator(
   contentComponent: props => <FortOptions {...props} />
 })
 
-export default createAppContainer(Menu)
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    fontSize: 16,
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#272D38',
-    padding: 8,
-
-  },
+    container: {
+      flex: 1,
+      flexDirection: 'column',
+      fontSize: 16,
+      paddingTop: Constants.statusBarHeight,
+      backgroundColor: '#272D38',
+      padding: 8
+    },
     optionslist: {
-    flexDirection: 'row',
-  },
-  prompt:{
-    backgroundColor: "#272D38",
-    color: "white",
-    fontSize: 15
-  },
-  colortext: {
-    fontSize: 24,
-    backgroundColor: '#272D38',
-    color: "#bae67e"
-  },
-  header:{
-    color: "white",
-    backgroundColor: '#313846',
-    borderRadius: 0
-    
-  }
+      flexDirection: 'row'
+    },
+    prompt:{
+      backgroundColor: "#272D38",
+      color: "white",
+      fontSize: 15
+    },
+    colortext: {
+      fontSize: 24,
+      backgroundColor: '#272D38',
+      color: "#bae67e"
+    },
+    header:{
+      color: "white",
+      backgroundColor: '#313846',
+      borderRadius: 0
+    }
 });
+
+export default createAppContainer(Menu)
