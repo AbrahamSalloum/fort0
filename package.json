@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "expo": "^36.0.0",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "native-base": "2.13.8",
     "node-fetch": "^2.6.0",
     "react": "16.9.0",
